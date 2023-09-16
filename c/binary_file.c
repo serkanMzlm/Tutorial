@@ -12,7 +12,7 @@
 
 #define ERROR(X) printf("\n"COLOR_RED"%s"COLOR_RST"\n",X)
 #define WARN(X)  printf("\n"COLOR_YLW"%s"COLOR_RST"\n",X)
-#define DEBUG(X) printf("\n"COLOR_GRN"%s"COLOR_RST"\n",X)
+#define DEBUG(X) printf("\n"COLOR_GRN"%s"COLOR_RST"\nww",X)
 #define INFO(X)  printf("\n"COLOR_WHT"%s"COLOR_RST"\n",X)
 
 typedef enum {automatic, manual}Gear_t;
