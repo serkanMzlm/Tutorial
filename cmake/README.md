@@ -93,3 +93,10 @@ foreach(x RANGE 10 20 5) start, end, increment amount
   - ARGn n yerine koyduğumuz sayı belirtilen sırada ki argümanın alınmasını sağlar.
 
 - `macro(func_name , fanc_args)`: Fonksiyonda her şey aynı sayılır, fonksiyonlar makroya dönüştürülürse kod hatasız çalışacaktır. Aralarındaki fark, bir global değişkenin değeri makro fonksiyonun içinde değiştiğinde, bunun doğrudan etkisinin dışarıdaki değişken üzerinde olmasıdır. (PARENT_SCOPE kullanmaya gerek yok)
+
+- `cache variable`: Bir değişkeni önbellek değişkeni olarak tanımlamak, o değişkenin değerinin her seferinde yeniden hesaplanmasını  engeler. Bu özellik, projenin inşa sürecinin her seferinde tekrarlanan ve zaman alan süreçlerini optimize etmeye yardımcı olabilir. 
+  - Bu sayede inşaat sürecinde tekrar eden süreçler en aza indirilir ve hızlandırılır.
+  - Derleme klasöründe bulunan CMakeCache.txt dosyasına kaydedilir.
+  -Belirttiğimiz değişkeni başka bir yere koysak bile önbellek değişmeyecek, sabit kalacaktır. -D parametresini değiştirmek veya `cmake -Dvariable` değiştirmek için "FORCE" kullanılmalıdır.
+
+- `EVN`: Bir ortam değişkenine erişmek, onu değiştirmek vb. istiyorsak kullanılır. 
