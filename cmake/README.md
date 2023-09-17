@@ -75,3 +75,13 @@ cmake -P CmakeLists.txt
   - STRLESS
   - STRGREATER
   - STREQUAL
+
+- `while()`: belirtilen koşul doğru olduğu sürece döngünün içinde kalır
+
+- `foreach()`: İçerisindeki liste elemanlarını tek tek alır ve belirtilen değişkene atar. Liste bitene kadar döngüde kalır.
+
+```
+foreach(x RANGE 10)  start
+foreach(x RANGE 10 20)  start, end
+foreach(x RANGE 10 20 5) start, end, increment amount
+```
