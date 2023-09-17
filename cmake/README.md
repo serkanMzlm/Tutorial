@@ -37,5 +37,30 @@ Cmake dosyasını çıktı olmadan çalıştırmak için alta bulunan komutunu �
 cmake -P CmakeLists.txt
 ```
 ---
-
--
+- `list(param1 param2 ...)`: 
+  - param1 listesi ne yapılacağını belirtir.
+      - APPEND
+      - REMOVE_AT
+      - REMOVE_ITEM
+      - REMOVE_DUPLICATES
+      - SORT
+      - INSERT
+      - REVERSE
+      - LENGTH
+      - GET
+      - SUBLIST
+      - JOIN
+      - FIND
+  - param2 listenin adıdır
+  - Eklenecek diğer parametreler param1'e bağlıdır.
+- `string(param1 param2 ... param_out)`: 
+  - param1 ne yapılacağını belirler
+      - FIND
+      - REPLACE
+      - PREPEND
+      - APPEND
+      - TOLOWER
+      - TOUPPER
+      - LENGTH
+  - param2 dize ifadesidir
+  - son parametre çıktıyı tutan değişkendir (param_out)
