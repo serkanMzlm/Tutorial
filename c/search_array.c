@@ -1,11 +1,9 @@
 #include <stdio.h>
 
-
 int array[] = {1, 2, 3, 4, 5, 12, 36, 1, 298, 76, 71, 23};
 int sequentialSearch(int search);
 int binarySearch(int arr[], int left, int right,  int search);
 void bubbleSort(int arr[], int n);
-
 
 int main(){
   bubbleSort(array, (sizeof(array) / sizeof(array[0])));
