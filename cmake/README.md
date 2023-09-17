@@ -124,3 +124,13 @@ foreach(x RANGE 10 20 5) start, end, increment amount
 ```
 cmake -DENABLE_FEATURE=ON ..
 ```
+- `add_compile_options():` Derleme zamanında ekstra parametreler eklememize olanak tanır.
+  - -w        Tüm uyarı mesajlarını engeller
+  - -Werror   Tüm uyarıları hataya dönüştürür
+  - -Wall     Tüm uyarıları gösterir
+  - -Wextra   Ayrıntılı uyarılar gösterilir.
+
+```
+add_compile_options(-w)
+add_compile_options(-std=c++11)
+```
