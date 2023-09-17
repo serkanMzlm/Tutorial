@@ -4,3 +4,6 @@
 - c++
 - cmake
 - python
+- linux
+- matlab
+
