@@ -14,16 +14,16 @@ int main() {
   * karakter dizilerinin son elamnı "\0" dır. "char_array" bellek
   * alanında \0 konulmadığı için ve bir sonraki bellek alnıda char 
   * ise bir sonraki bellek alanınıda okur. */
-  printf("%s\n", char_array);
+  printf("%s\nWhat is your name:", char_array);
   scanf("%s",name);  //char dizinleri bir pointer adresi tutuğu için & konulmaz
   printf("name: %s\n", name); 
   puts(county[1]);
 
-  printf("wort1 : %s\nword2 : %s\n",word1,word2);
+  printf("wort1 : %s\tword2 : %s\n",word1,word2);
 	strcat(word1,word2); // ikinçiyi birincinin sonuna ekler
-	printf("word1 : %s\nword2 : %s\n",word1,word2);
+	printf("word1 : %s\tword2 : %s\n",word1,word2);
 	strcpy(word2,word1); // ikinçiyi birinciye kopyalar
-	printf("word1 : %s\nword2 : %s\n",word1,word2);
+	printf("word1 : %s\tword2 : %s\n",word1,word2);
 
 	if(strcmp(word1,word2)){ printf("not equal\n"); }
 	else  printf("equal\n");
