@@ -18,4 +18,24 @@
   - PRIVATE : Yalnızca kütüphanede kullanılıyorsa
   - INTERFACE: Kütüphanede kullanılmıyor ancak çalıştırılabilir dosyada kullanılıyorsa
 
+- `set({varvariable_name} {variable1} {variable2} ...)` : Bir cmake değişkeni oluşturur. "\${}" cmake değişkeninde bulunan değere erişmek için kullanılır. `"` ile işaretleme zorunluluğu yoktur. `"` atlanırsa her boşluk bir sonraki dizi elemanına geçer. Eğer değişkenler çağrılırken "\${}" içinde belirtilirse, değişkenin içinde bir dizi varsa hepsi bitişik olarak yazılacaktır. yalnızca ${} ile çağrılırsa diziler arasında `;` olarak ayrılmıştır. Ayarlarken boşluk yerine ";" aynı anlam kullanılabilir.
+  - set(number 1 2 3) = set(number 1;2;3)
+  - set(name "aa;bb;cc") = set(name aa bb cc)
+
+- `unset({variable})`: Değişkeni tanımsız yapar.
+
+- `message()`: Ekrana çıkış verilemsini sağlar. Çıkış türü belirlenebilir
+  - message(STATUS "Cmake File Status Worked...")
+  - message(DEBUG "Cmake File Debug Worked...")
+  - message(WARNING "Cmake File WARNING Worked...")
+  - message(FATAL ERROR "Cmake File FATAL ERROR Worked...")
+  - message("Cmake File Worked...") 
+
+---
+Cmake dosyasını çıktı olmadan çalıştırmak için alta bulunan komutunu çalıştırın.
+```
+cmake -P CmakeLists.txt
+```
+---
+
 -
