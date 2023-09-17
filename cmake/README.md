@@ -17,6 +17,13 @@
   - PUBLIC : Hem yürütülebilir dosyada hem de kütüphanede kullanılıyorsa
   - PRIVATE : Yalnızca kütüphanede kullanılıyorsa
   - INTERFACE: Kütüphanede kullanılmıyor ancak çalıştırılabilir dosyada kullanılıyorsa
+  - Bu komut içerisinde birden fazla PUBLIC PRIVATE kullanılabilir. target_include_directories(my_libs PRIVATE xxx PUBLIC yyy INTERFACE zzz)
+
+- `add_definitions()`: Derleme zamanında kullanılan tanımları eklemek için kullanılır. Ayrıca doğrudan sistemde kullanabileceğimiz makroları tanımlamamızı da sağlayabilir. -D parametresi sisteme yeni bir makro eklemek için kullanılır.
+
+`include_directories(${PROJECT_SOURCE_DIR}/inc)`: Projenin kütüphanelerinin konumunu gösterir. `include_directories` ve `target_include_directories` arasındaki farklar:
+- `include_directories` işlevi, verilen dizinlerin projenin tüm hedefleri için geçerli olmasını sağlar. Bu, projenin tüm kaynak dosyalarının verilen dizinleri içeren başlık dosyalarını bulmasını sağlayacaktır.
+- `target_include_directories` işlevi, verilen dizinlerin yalnızca belirtilen hedef için geçerli olmasını sağlar. Bu, yalnızca belirtilen hedef tarafından kullanılan başlığı bulmasını sağlar ve diğer hedefin verilen dizinleri kullanmasını engeller.
 
 - `set({varvariable_name} {variable1} {variable2} ...)` : Bir cmake değişkeni oluşturur. "\${}" cmake değişkeninde bulunan değere erişmek için kullanılır. `"` ile işaretleme zorunluluğu yoktur. `"` atlanırsa her boşluk bir sonraki dizi elemanına geçer. Eğer değişkenler çağrılırken "\${}" içinde belirtilirse, değişkenin içinde bir dizi varsa hepsi bitişik olarak yazılacaktır. yalnızca ${} ile çağrılırsa diziler arasında `;` olarak ayrılmıştır. Ayarlarken boşluk yerine ";" aynı anlam kullanılabilir.
   - set(number 1 2 3) = set(number 1;2;3)
@@ -100,3 +107,20 @@ foreach(x RANGE 10 20 5) start, end, increment amount
   -Belirttiğimiz değişkeni başka bir yere koysak bile önbellek değişmeyecek, sabit kalacaktır. -D parametresini değiştirmek veya `cmake -Dvariable` değiştirmek için "FORCE" kullanılmalıdır.
 
 - `EVN`: Bir ortam değişkenine erişmek, onu değiştirmek vb. istiyorsak kullanılır. 
+
+- `install()`: Temel amacı belirtilen dosyayı istenen konuma kopyalamaktır.
+- FILES dosyayı kopyalar
+- TARGETS dizin kopyaları
+- EXPORT Yaptığımız dosyaları find_package komutu ile bulmamızı sağlayacak şekilde gerekli forma dönüştürür.
+
+- `find_package(ABC)`:  ABC-config.cmake'yi arar, aradığı klasör `/usr/local/lib/ABC`
+  - **REQUIRED** ile bu dosyanın bulunması zorunlu hale getiriyoruz
+  - **MODULE** Modül olarak arama yapmak için kullanılır `find_package(my_lib MODULE) -> Findmy_lib.cmake`
+  - **CONFIG** Yapılandırma olarak aramak için kullanılır `find_package(my_lib MODULE) -> my_lib-config.cmake`
+  - Belirtilmemişse, önce MODULE modunda arama yapar, ardından CONFIG modunda arama yapar.
+
+- `option():` "option" işlevi, CMake yapılandırma işlemi sırasında kullanıcıya bir seçim sunmanıza olanak tanır. Seçenek, CMake dosyalarında bir değişken olarak tanımlanır ve değer, komut satırından veya CMake GUI aracından belirtilir.
+
+```
+cmake -DENABLE_FEATURE=ON ..
+```
