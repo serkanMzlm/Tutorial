@@ -134,3 +134,25 @@ cmake -DENABLE_FEATURE=ON ..
 add_compile_options(-w)
 add_compile_options(-std=c++11)
 ```
+
+`include()` : Sisteme başka bir cmake dosyası eklememizi sağlar.
+
+```
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+include(src/CMakeLists.txt)
+```
+
+- `file()`: İşlemler için kullanılan dosya okuma yazma vb.
+
+  - GLOB: Geçerli dizindeki dosyaların listesini almak için.
+  - GLOB_RECURSE: Geçerli dizindeki ve tüm alt dizinlerindeki dosyaların listesini almak için.
+
+```
+file(GLOB_RECURSE myfiles  ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/inc/*.h)
+```
+- `execute_process()`: Komutu terminalde çalıştırır. Örneğin uygulama her çalıştığında github'dan önce kodu çekmesini isteyebiliriz.
+  - COMMAND:  Çalıştırılacak komutu ifade edin
+  - WORKING_DIRECTORY: Komutların çalışacağı dizini ifade eder.
+  - RESULT_VARIABLE:   Komutun sonucu başarılı olursa 0, başarısız olursa 1 değerini döndürür.
+  - OUTPUT_VARIABLE:   Komut çıktısını değişkene atar.
+  - ERROR_VARIABLE:    Komutta bir hata oluşursa bu hatayı sakladığı değişkeni ayarlarız.
