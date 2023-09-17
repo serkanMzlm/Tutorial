@@ -1,0 +1,1 @@
+**add_subdirectory(add_dir):** It allows to move between directories. It runs the cmake file in the current directory and comes back to the old cmake file. The cmake file must be in the specified directory.

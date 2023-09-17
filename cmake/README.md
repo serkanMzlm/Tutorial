@@ -10,3 +10,5 @@
 - `target_link_libraries({exe_name} PRIVATE {lib_1} {lib_2})` : add_library'yi add_executable'a bağlarız. Bu bölümde PUBLIC veya PRIVATE anahtar kelimeleri kullanılabilir. (default: PUBLIC)
   - **PUBLIC:** exe_name'min aldığı lib_1 ve lib_2'nin başka dosyalara aktarılmasına izin verir.
   - **PRIVATE:** exe_name'min aldığı lib_1 ve lib_2'nin başka dosyalara aktarılmasını engeler.
+
+- `add_subdirectory({add_dir}):` Dizinler arasında geçiş yapmanızı sağlar. Cmake dosyasını geçerli dizinde çalıştırır ve eski cmake dosyasına geri döner. CMake dosyası belirtilen dizinde olmalıdır.
