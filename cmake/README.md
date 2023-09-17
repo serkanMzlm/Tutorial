@@ -85,3 +85,11 @@ foreach(x RANGE 10)  start
 foreach(x RANGE 10 20)  start, end
 foreach(x RANGE 10 20 5) start, end, increment amount
 ```
+
+- `function(func_name , fanc_args)`: Fonksiyon içerisinde global değişkenin değerini değiştirsek bile bu değer global alanda değil sadece local kısımda değişir. (bu olay add_subdirectory'de geçerlidir) global alandaki değeri değiştirmek için "PARENT_SCOPE" anahtar kelimesi kullanılır. PARENT_SCOPE işlevin içindeki değişkeni değil, işlevin dışındaki değişkeni değiştirir.
+  - ARGC kaç tane argüman girildi
+  - ARGV tüm argümanları içeren bir liste
+  - ARGN Fonksiyonun parametre olarak aldığı değerlerin dışındaki değerleri alır
+  - ARGn n yerine koyduğumuz sayı belirtilen sırada ki argümanın alınmasını sağlar.
+
+- `macro(func_name , fanc_args)`: Fonksiyonda her şey aynı sayılır, fonksiyonlar makroya dönüştürülürse kod hatasız çalışacaktır. Aralarındaki fark, bir global değişkenin değeri makro fonksiyonun içinde değiştiğinde, bunun doğrudan etkisinin dışarıdaki değişken üzerinde olmasıdır. (PARENT_SCOPE kullanmaya gerek yok)
