@@ -12,3 +12,10 @@
   - **PRIVATE:** exe_name'min aldığı lib_1 ve lib_2'nin başka dosyalara aktarılmasını engeler.
 
 - `add_subdirectory({add_dir}):` Dizinler arasında geçiş yapmanızı sağlar. Cmake dosyasını geçerli dizinde çalıştırır ve eski cmake dosyasına geri döner. CMake dosyası belirtilen dizinde olmalıdır.
+
+- `target_include_directories({lib_name} PUBLIC ${PROJECT_SOURCE_DIR}/inc)`: .h dosyalarının bulunduğu dizini belirtir. PUBLIC , PRIVATE , INTERFACE gibi anahtar kelimeler kullanılabilir. <u>PROJECT_SOURCE_DIR</u> (proje dizini)
+  - PUBLIC : Hem yürütülebilir dosyada hem de kütüphanede kullanılıyorsa
+  - PRIVATE : Yalnızca kütüphanede kullanılıyorsa
+  - INTERFACE: Kütüphanede kullanılmıyor ancak çalıştırılabilir dosyada kullanılıyorsa
+
+-
