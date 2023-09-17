@@ -64,3 +64,14 @@ cmake -P CmakeLists.txt
       - LENGTH
   - param2 dize ifadesidir
   - son parametre çıktıyı tutan değişkendir (param_out)
+
+- `if-elseif-endif` ​​"1, TRUE, Y, YES, a non-zero number" değerleri koşulun doğru olmasını sağlar. ​​"0, OFF, NO , FALSE, N, IGNORE, NOTFOUND, the empty string" değerleri koşulun yanlış olmasını sağlar.
+  - DEFINED Değişkenin tanımlı olup olmadığı kontrol edilir.
+  - COMMAND Komutun mevcut olup olmadığını kontrol edin
+  - EXISTS  Belirtilen lokasyonda dosyanın bulunup bulunmadığı kontrol edilir.
+  - NOT
+  - AND
+  - OR
+  - STRLESS
+  - STRGREATER
+  - STREQUAL
