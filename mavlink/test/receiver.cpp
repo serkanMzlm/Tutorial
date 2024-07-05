@@ -17,7 +17,7 @@
 #define LOCAL_PORT 14550
 
 volatile sig_atomic_t exit_flag = 0;
-bool flag = true;
+bool flag = false;
 
 void receiveHeartbeatUdp(int sockfd);
 int openUdpSocket(int port);
@@ -29,7 +29,7 @@ void signalHandler(int signum);
 
 int main(int argc, char** argv)
 {
-    const char *serial_port = "/dev/ttyACM0"; 
+    const char *serial_port = "/dev/ttyACM1"; 
     const int serial_speed = B57600;  
     int sockfd;
     int fd; 

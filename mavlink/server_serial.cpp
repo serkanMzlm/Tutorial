@@ -1,37 +1,39 @@
 #include <iostream>
 #include <unistd.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+#include <fcntl.h>
+#include <termios.h>
 #include "mavlink/common/mavlink.h"
 
-#define MY_IP "127.0.0.1"  // Alıcı IP adresi
-#define MY_PORT 14550     // Alıcı Port numarası
+#define SERIAL_PORT "/dev/ttyACM1"  // Seri port adı
 
 int main() {
-    int udp_port = 14550;  // Kendi UDP port numarası
-
-    // UDP bağlantısı oluştur
-    int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
-    if (sockfd < 0) {
-        std::cerr << "Socket oluşturulamadı." << std::endl;
+    // Seri bağlantıyı aç
+    int fd = open(SERIAL_PORT, O_RDWR | O_NOCTTY);
+    if (fd < 0) {
+        std::cerr << "Seri port açılamadı." << std::endl;
         return -1;
     }
 
-    struct sockaddr_in sockaddr;
-    sockaddr.sin_family = AF_INET;
-    sockaddr.sin_port = htons(udp_port);
-    sockaddr.sin_addr.s_addr = INADDR_ANY;
-
-    if (bind(sockfd, (struct sockaddr *)&sockaddr, sizeof(sockaddr)) < 0) {
-        std::cerr << "Bind işlemi başarısız." << std::endl;
-        close(sockfd);
+    // Seri port ayarlarını yapılandır
+    struct termios tty;
+    if (tcgetattr(fd, &tty) != 0) {
+        std::cerr << "Seri port ayarları okunamadı." << std::endl;
+        close(fd);
         return -1;
     }
+    cfsetospeed(&tty, B57600);
+    cfsetispeed(&tty, B57600);
+    tty.c_cflag |= (CLOCAL | CREAD);
+    tty.c_cflag &= ~PARENB;
+    tty.c_cflag &= ~CSTOPB;
+    tty.c_cflag &= ~CSIZE;
+    tty.c_cflag |= CS8;
+    tcsetattr(fd, TCSANOW, &tty);
 
     // Alıcı döngüsü
     while (true) {
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
-        ssize_t recsize = recv(sockfd, (void *)buffer, MAVLINK_MAX_PACKET_LEN, 0);
+        ssize_t recsize = read(fd, buffer, sizeof(buffer));
 
         if (recsize > 0) {
             // MAVLink mesajını işle
@@ -44,10 +46,10 @@ int main() {
                         mavlink_heartbeat_t heartbeat;
                         mavlink_msg_heartbeat_decode(&msg, &heartbeat);
                         std::cout << "rx: " << heartbeat.custom_mode << std::endl;
-                        
+
                         // custom_mode 99 olduğunda döngüyü sonlandır
                         if (heartbeat.custom_mode == 99) {
-                            close(sockfd);  // Socket'i kapat
+                            close(fd);  // Seri portu kapat
                             return 0;  // Programı sonlandır
                         }
                     }
@@ -55,12 +57,12 @@ int main() {
             }
         } else if (recsize < 0) {
             std::cerr << "Mesaj alma hatası." << std::endl;
-            close(sockfd);
+            close(fd);
             return -1;
         }
     }
 
     // Kaynakları serbest bırak
-    close(sockfd);
+    close(fd);
     return 0;
 }
