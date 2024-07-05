@@ -17,16 +17,30 @@ int main() {
 
     // UDP bağlantısı oluşturunuz
     int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (sockfd < 0) {
+        std::cerr << "Socket oluşturulamadı." << std::endl;
+        return -1;
+    }
+
     struct sockaddr_in sockaddr;
     sockaddr.sin_family = AF_INET;
     sockaddr.sin_port = htons(udp_port);
     sockaddr.sin_addr.s_addr = INADDR_ANY;
-    bind(sockfd, (struct sockaddr *)&sockaddr, sizeof(struct sockaddr_in));
+
+    if (bind(sockfd, (struct sockaddr *)&sockaddr, sizeof(sockaddr)) < 0) {
+        std::cerr << "Bind işlemi başarısız." << std::endl;
+        close(sockfd);
+        return -1;
+    }
 
     struct sockaddr_in destaddr;
     destaddr.sin_family = AF_INET;
     destaddr.sin_port = htons(TARGET_PORT);
-    inet_pton(AF_INET, TARGET_IP, &(destaddr.sin_addr));
+    if (inet_pton(AF_INET, TARGET_IP, &destaddr.sin_addr) <= 0) {
+        std::cerr << "Geçersiz IP adresi." << std::endl;
+        close(sockfd);
+        return -1;
+    }
 
     // 1'den 100'e kadar olan sayıları MAVLink mesajları olarak gönderin
     for (int sayi = 1; sayi <= 100; sayi++) {
@@ -42,7 +56,11 @@ int main() {
         uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
         int len = mavlink_msg_to_send_buffer(buffer, &msg);
 
-        sendto(sockfd, buffer, len, 0, (struct sockaddr *)&destaddr, sizeof(struct sockaddr_in));
+        if (sendto(sockfd, buffer, len, 0, (struct sockaddr *)&destaddr, sizeof(destaddr)) < 0) {
+            std::cerr << "Mesaj gönderme hatası." << std::endl;
+            close(sockfd);
+            return -1;
+        }
 
         std::cout << "tx: " << sayi << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(1)); 
