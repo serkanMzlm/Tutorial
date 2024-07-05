@@ -45,7 +45,7 @@ int main() {
         sendto(sockfd, buffer, len, 0, (struct sockaddr *)&destaddr, sizeof(struct sockaddr_in));
 
         std::cout << "tx: " << sayi << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(1));  // Her bir sayı arasında 1 saniye bekle
+        std::this_thread::sleep_for(std::chrono::seconds(1)); 
     }
 
     close(sockfd);
