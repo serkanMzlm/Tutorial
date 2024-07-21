@@ -28,9 +28,3 @@ target_link_libraries(pub
   gz-sim${GZ_SIM_VER}::gz-sim${GZ_SIM_VER}
   gz-transport${GZ_TRANSPORT_VER}::gz-transport${GZ_TRANSPORT_VER}
 )
-
-target_link_libraries(sub
-  gz-plugin${GZ_PLUGIN_VER}::gz-plugin${GZ_PLUGIN_VER}
-  gz-sim${GZ_SIM_VER}::gz-sim${GZ_SIM_VER}
-  gz-transport${GZ_TRANSPORT_VER}::gz-transport${GZ_TRANSPORT_VER}
-)
