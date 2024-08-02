@@ -1,12 +1,4 @@
-<?xml version="1.0" ?>
-<!-- Adapted from Gazebo classic (gazebo/world/wind_demo.world)
-
-After starting the simulation, the wind velocity can be adjusted by publishing a Wind message
-Example:
-
-  gz topic -t "/world/wind_demo/wind/" -m gz.msgs.Wind  -p "linear_velocity: {x:-50, y:50}, enable_wind: true"
--->
-
+<?xml version="1.0"?>
 <sdf version="1.6">
   <world name="wind_demo">
     <plugin
@@ -378,8 +370,8 @@ Example:
             <period>60</period>
           </sin>
           <noise type="gaussian">
-           <mean>0</mean>
-           <stddev>0.0002</stddev>
+            <mean>0</mean>
+            <stddev>0.0002</stddev>
           </noise>
         </magnitude>
         <direction>
@@ -389,15 +381,15 @@ Example:
             <period>20</period>
           </sin>
           <noise type="gaussian">
-           <mean>0</mean>
-           <stddev>0.03</stddev>
+            <mean>0</mean>
+            <stddev>0.03</stddev>
           </noise>
         </direction>
       </horizontal>
       <vertical>
         <noise type="gaussian">
-         <mean>0</mean>
-         <stddev>0.03</stddev>
+          <mean>0</mean>
+          <stddev>0.03</stddev>
         </noise>
       </vertical>
     </plugin>
