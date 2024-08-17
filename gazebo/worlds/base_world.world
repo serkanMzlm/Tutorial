@@ -48,8 +48,10 @@
 					<near>0.25</near>
 					<far>25000</far>
 				</camera_clip>
-				<horizontal_fov>57.29578</horizontal_fov> <!-- Kamera bir nesneyi takip ederken
-				kullanışlı oluyor -->
+
+				<!-- Kamera bir nesneyi takip ederken kullanışlı oluyor -->
+				<horizontal_fov>57.29578</horizontal_fov>
+
 			</plugin>
 
 			<!-- Dünyayı durdurma, devam ettirme vs işlerine yarayan butonların ayarlarının
@@ -157,7 +159,7 @@
 			</plugin>
 
 			<!-- Eklenen modeller hakkında bilgi verir -->
-			<plugin filename="EntityTree" name="Entity tree"/>
+			<plugin filename="EntityTree" name="Entity tree" />
 
 			<!-- Sim ortamı hakkında bilgi verir -->
 			<plugin filename="ComponentInspector" name="Component inspector">
@@ -166,45 +168,45 @@
 				</gz-gui>
 			</plugin>
 
-			<plugin filename="ViewAngle" name="View Angle"/>
-			
-            <plugin filename="ImageDisplay" name="Image Display">
-                <gz-gui>
-                  <title>Camera</title>
-                  <property key="state" type="string">docked</property>
-                </gz-gui>
-                <topic>/camera_vision</topic>
-            </plugin>
+			<plugin filename="ViewAngle" name="View Angle" />
 
-            <plugin filename="VisualizeLidar" name="Visualize Lidar">
-              <gz-gui>
-                <title>Lidar</title>
-                <property type="string" key="state">docked</property>
-              </gz-gui>
-            </plugin>
+			<plugin filename="ImageDisplay" name="Image Display">
+				<gz-gui>
+					<title>Camera</title>
+					<property key="state" type="string">docked</property>
+				</gz-gui>
+				<topic>/camera_vision</topic>
+			</plugin>
+
+			<plugin filename="VisualizeLidar" name="Visualize Lidar">
+				<gz-gui>
+					<title>Lidar</title>
+					<property type="string" key="state">docked</property>
+				</gz-gui>
+			</plugin>
 		</gui>
 
 		<include> <!-- Model eklemek için kullanılır. -->
 			<uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/Coke</uri>
 		</include>
-		
-		<gravity>0 0 -9.8</gravity>
-        <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
-        <atmosphere type='adiabatic'/>
 
-		<light type="directional" name="sun"> <!-- Aydınlatma için kullanılır. type: {point,
-			directional, spot}-->
+		<gravity>0 0 -9.8</gravity>
+		<magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+		<atmosphere type='adiabatic' />
+
+		<!-- Aydınlatma için kullanılır. type: {point, directional, spot}-->
+		<light type="directional" name="sun">
 			<cast_shadows>true</cast_shadows>
 			<pose>0 0 10 0 0 0</pose>
 			<diffuse>0.8 0.8 0.8 1</diffuse>
 			<specular>0.2 0.2 0.2 1</specular>
-			<attenuation>
-				<range>1000</range>
-				<constant>0.9</constant>
-				<linear>0.01</linear>
-				<quadratic>0.001</quadratic>
+			<attenuation> <!-- Işığın nasıl sönümlendiği -->
+				<range>10</range>
+				<constant>0.9</constant> <!-- sabit zayıflama faktörüdür, 1asla zayıflamaz ve 0 tamamen zayıflamadır. -->
+				<linear>0.01</linear> <!-- doğrusal zayıflama faktörüdür, 1mesafe boyunca eşit zayıflama anlamına gelir -->
+				<quadratic>0.001</quadratic> <!-- ikinci dereceden zayıflama faktörüdür. Zayıflamaya eğrilik ekler. -->
 			</attenuation>
-			<direction>-0.5 0.1 -0.9</direction>
+			<direction>-0.5 0.1 -0.9</direction> <!-- şığın yönüdür ve yalnızca spot ve yönlü ışık için geçerlidir. -->
 		</light>
 	</world>
 </sdf>
