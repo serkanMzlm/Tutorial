@@ -57,6 +57,7 @@ private:
   std::shared_ptr<tf2_ros::StaticTransformBroadcaster> tf_static_broadcaster_;
 };
 
+// ros2 run cpp_tf2 static_turtle_tf2_broadcaster mystaticturtle 0 0 1 0 0 0
 int main(int argc, char * argv[])
 {
   auto logger = rclcpp::get_logger("logger");
