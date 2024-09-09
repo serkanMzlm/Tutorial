@@ -13,4 +13,4 @@ plot(x,y3,':k',"LineWidth",2) %black : noktalı gösterir
 %anlamı taşır
 grid
 legend("y1","y2","y3")%  grafikte  cizgilerin isimlendirmemizi saglar
-% lambda , pi ,epsilon gibi sismgeleri cagırmak  için \ sonra yazılır
+% lambda , pi ,epsilon gibi simgeleri cagırmak  için \ sonra yazılır
