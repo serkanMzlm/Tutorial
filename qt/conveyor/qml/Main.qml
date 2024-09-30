@@ -14,6 +14,8 @@ Window {
     visibility: Window.FullScreen
 
     property color main_toolbar_base_color: "white"
+    property int image_text_dist: 10
+    property int icon_size: 80
 
     Rectangle {
         id: main_toolbar
@@ -70,56 +72,101 @@ Window {
 
         ColumnLayout {
             anchors.fill: parent
-            spacing: 0
+            spacing: 1
+
             Button {
-                // text: "Home"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 icon.source: "../assets/icons/home.png"
-                icon.width: 100
-                icon.height: 100
+                icon.width: icon_size
+                icon.height: icon_size
+                Text {
+                    text: "Home"
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: image_text_dist
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "white"
+                    font.bold: true
+                }
             }
             Button {
-                // text: "Warning"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 icon.source: "../assets/icons/warning.png"
-                icon.width: 100
-                icon.height: 100
+                icon.width: icon_size
+                icon.height: icon_size
+                Text {
+                    text: "Alarms"
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: image_text_dist
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "white"
+                    font.bold: true
+                }
             }
             Button {
-                // text: "Settings"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 icon.source: "../assets/icons/settings.png"
-                icon.width: 100
-                icon.height: 100
+                icon.width: icon_size
+                icon.height: icon_size
+                Text {
+                    text: "Settings"
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: image_text_dist
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "white"
+                    font.bold: true
+                }
             }
             Button {
-                // text: "Services"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 icon.source: "../assets/icons/service.png"
-                icon.width: 100
-                icon.height: 100
+                icon.width: icon_size
+                icon.height: icon_size
+                Text {
+                    text: "Service"
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: image_text_dist
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "white"
+                    font.bold: true
+                }
             }
             Button {
-                // text: "Reset"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 icon.source: "../assets/icons/reset.png"
-                icon.width: 100
-                icon.height: 100
+                icon.width: icon_size
+                icon.height: icon_size
+                Text {
+                    text: "Reset"
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: image_text_dist
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "white"
+                    font.bold: true
+                }
             }
             Button {
-                // text: "Start / Stop"
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 icon.source: "../assets/icons/play.png"
-                icon.width: 100
-                icon.height: 100
+                icon.width: icon_size
+                icon.height: icon_size
+                Text {
+                    id: start_stop_text
+                    text: "Start"
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: image_text_dist
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "white"
+                    font.bold: true
+                }
                 onClicked: {
                     icon.source = icon.source == "../assets/icons/play.png" ? "../assets/icons/pause.png" : "../assets/icons/play.png";
+                    start_stop_text.text = icon.source == "../assets/icons/play.png" ? "Start" : "Stop";
                 }
             }
         }
