@@ -10,14 +10,23 @@ qt_standard_project_setup()
 
 qt_add_executable(appconveyor
     main.cpp
+    date_time.h
+    date_time.cpp
 )
 
 qt_add_qml_module(appconveyor
     URI conveyor
     VERSION 1.0
     QML_FILES
-        Main.qml
-        MainToolbar.qml
+        qml/Main.qml
+    RESOURCES
+        assets/icons/home.png
+        assets/icons/service.png
+        assets/icons/settings.png
+        assets/icons/warning.png
+        assets/icons/play.png
+        assets/icons/reset.png
+        assets/icons/pause.png
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -30,6 +39,42 @@ set_target_properties(appconveyor PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
+
+target_link_libraries(appconveyor PRIVATE Qt6::Quick)
+
+install(TARGETS appconveyor
+    BUNDLE DESTINATION .
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 target_link_libraries(appconveyor
     PRIVATE Qt6::Quick

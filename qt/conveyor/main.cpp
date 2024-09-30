@@ -6,7 +6,8 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/conveyor/Main.qml"));
+    // const QUrl url(QStringLiteral("qrc:/conveyor/qml/MyMainToolbar.qml"));
+    const QUrl url(u"qrc:/conveyor/qml/Main.qml"_qs);
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,
