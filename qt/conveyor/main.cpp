@@ -1,10 +1,12 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#include "serial_comm.h"
+
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-
+    SerialComm serial;
     QQmlApplicationEngine engine;
     // const QUrl url(QStringLiteral("qrc:/conveyor/qml/MyMainToolbar.qml"));
     const QUrl url(u"qrc:/conveyor/qml/Main.qml"_qs);
