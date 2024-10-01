@@ -14,6 +14,8 @@ qt_add_executable(appconveyor
     date_time.cpp
     serial_comm.h
     serial_comm.cpp
+    navigation_menu.h
+    navigation_menu.cpp
 )
 
 qt_add_qml_module(appconveyor
@@ -21,6 +23,8 @@ qt_add_qml_module(appconveyor
     VERSION 1.0
     QML_FILES
         qml/Main.qml
+        qml/NavigationMenu.qml
+        qml/TopToolbar.qml
     RESOURCES
         assets/icons/home.png
         assets/icons/service.png
