@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import conveyor.datetime 1.0
+import conveyor.serialcom 1.0
 
 Window {
     id: root
@@ -9,6 +11,8 @@ Window {
     title: qsTr("Conveyor App")
     color: "gray"
 
+    height: 480
+    width: 680
     visibility: Window.FullScreen
 
     property color main_toolbar_base_color: "white"
@@ -55,6 +59,19 @@ Window {
                 onClicked:  Qt.quit()
             }
 
+        }
+
+        Text {
+            id: date_time_text
+            text: DateTime.calender
+            font.bold: true
+            font.pointSize: Math.max(parent.width * 0.0075, 1)
+            color: "#4B0082"
+            anchors {
+                left: parent.left
+                leftMargin: parent.width * 0.005
+                verticalCenter: parent.verticalCenter
+            }
         }
     }
 
@@ -190,9 +207,12 @@ Window {
                     color: "white"
                     font.bold: true
                 }
+
+                onClicked: SerialComm.debugPort()
             }
         }
     }
+
 /**
     Rectangle{
         id: test_button

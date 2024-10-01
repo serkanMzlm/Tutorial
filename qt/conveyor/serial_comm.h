@@ -20,7 +20,7 @@ public:
     void checkDeviceConnection();
     void readBytes();
     void writeBytes(uint8_t new_data);
-    void debugPort();
+    Q_INVOKABLE void debugPort();
 signals:
 };
 
