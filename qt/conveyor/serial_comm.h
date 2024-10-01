@@ -19,8 +19,9 @@ public:
     ~SerialComm();
     void checkDeviceConnection();
     void readBytes();
-    void writeBytes(uint8_t new_data);
+    Q_INVOKABLE void writeBytes(uint8_t new_data = 'a');
     Q_INVOKABLE void debugPort();
+
 signals:
 };
 

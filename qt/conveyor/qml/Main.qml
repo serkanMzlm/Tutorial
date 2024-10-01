@@ -208,20 +208,8 @@ Window {
                     font.bold: true
                 }
 
-                onClicked: SerialComm.debugPort()
+                onClicked: SerialComm.writeBytes()
             }
         }
     }
-
-/**
-    Rectangle{
-        id: test_button
-        width: 50
-        height: 50
-        color: "blue"
-        anchors{
-            right: side_panel.left
-            bottom: parent.bottom
-        }
-    }*/
 }
