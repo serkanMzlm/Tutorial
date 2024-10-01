@@ -1,3 +1,5 @@
+#include <QIcon>
+#include <QDirIterator>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
@@ -8,6 +10,9 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    app.setWindowIcon(QIcon(":/conveyor/assets/icons/conveyor.ico"));
+    // app.setWindowIcon(QIcon(":/qt/qml/conveyor/assets/icons/conveyor.ico"));
+    QDirIterator qrc(":", QDirIterator::Subdirectories);
     SerialComm* serial = new SerialComm(&app);
     DateTime* date_time = new DateTime(&app);
     NavigationMenu* navigation_menu = new NavigationMenu(&app);

@@ -34,6 +34,7 @@ qt_add_qml_module(appconveyor
         assets/icons/reset.png
         assets/icons/pause.png
         assets/icons/test.png
+        assets/icons/conveyor.ico
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
