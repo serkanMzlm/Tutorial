@@ -5,8 +5,6 @@ import QtQuick.Layouts 1.15
 
 Window {
     id: root
-    width: 640
-    height: 480
     visible: true
     title: qsTr("Conveyor App")
     color: "gray"
@@ -16,6 +14,7 @@ Window {
     property color main_toolbar_base_color: "white"
     property int image_text_dist: 10
     property int icon_size: 80
+    property bool buton_highlighted : true
 
     Rectangle {
         id: main_toolbar
@@ -80,6 +79,7 @@ Window {
                 icon.source: "../assets/icons/home.png"
                 icon.width: icon_size
                 icon.height: icon_size
+                highlighted: buton_highlighted
                 Text {
                     text: "Home"
                     anchors.bottom: parent.bottom
@@ -95,6 +95,7 @@ Window {
                 icon.source: "../assets/icons/warning.png"
                 icon.width: icon_size
                 icon.height: icon_size
+                highlighted: buton_highlighted
                 Text {
                     text: "Alarms"
                     anchors.bottom: parent.bottom
@@ -110,6 +111,7 @@ Window {
                 icon.source: "../assets/icons/settings.png"
                 icon.width: icon_size
                 icon.height: icon_size
+                highlighted: buton_highlighted
                 Text {
                     text: "Settings"
                     anchors.bottom: parent.bottom
@@ -125,6 +127,7 @@ Window {
                 icon.source: "../assets/icons/service.png"
                 icon.width: icon_size
                 icon.height: icon_size
+                highlighted: buton_highlighted
                 Text {
                     text: "Service"
                     anchors.bottom: parent.bottom
@@ -140,6 +143,7 @@ Window {
                 icon.source: "../assets/icons/reset.png"
                 icon.width: icon_size
                 icon.height: icon_size
+                highlighted: buton_highlighted
                 Text {
                     text: "Reset"
                     anchors.bottom: parent.bottom
@@ -155,6 +159,7 @@ Window {
                 icon.source: "../assets/icons/play.png"
                 icon.width: icon_size
                 icon.height: icon_size
+                highlighted: buton_highlighted
                 Text {
                     id: start_stop_text
                     text: "Start"
@@ -169,6 +174,34 @@ Window {
                     start_stop_text.text = icon.source == "../assets/icons/play.png" ? "Start" : "Stop";
                 }
             }
+            Button {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                icon.source: "../assets/icons/test.png"
+                icon.width: icon_size
+                icon.height: icon_size
+                highlighted: buton_highlighted
+                Text {
+                    id: test_button_text
+                    text: "Test Mode"
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: image_text_dist
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: "white"
+                    font.bold: true
+                }
+            }
         }
     }
+/**
+    Rectangle{
+        id: test_button
+        width: 50
+        height: 50
+        color: "blue"
+        anchors{
+            right: side_panel.left
+            bottom: parent.bottom
+        }
+    }*/
 }
