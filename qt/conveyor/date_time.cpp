@@ -45,16 +45,19 @@ void DateTime::printCurrentTime() const {
 
 void DateTime::setFormattedDateTime()
 {
-    QString formatted_date_time = QString("%4:%5:%6\n%1.%2.%3")
-        .arg(localTime->tm_mday, 2, 10, QChar('0'))
-        .arg(localTime->tm_mon + 1, 2, 10, QChar('0'))
-        .arg(localTime->tm_year + 1900)
-        .arg(localTime->tm_hour, 2, 10, QChar('0'))
-        .arg(localTime->tm_min, 2, 10, QChar('0'))
-        .arg(localTime->tm_sec, 2, 10, QChar('0'));
+    QString formatted_date = QString("%1.%2.%3")
+                                 .arg(localTime->tm_mday, 2, 10, QChar('0'))
+                                 .arg(localTime->tm_mon + 1, 2, 10, QChar('0'))
+                                 .arg(localTime->tm_year + 1900);
+
+    QString formatted_time = QString("%1:%2:%3")
+                                 .arg(localTime->tm_hour, 2, 10, QChar('0'))
+                                 .arg(localTime->tm_min, 2, 10, QChar('0'))
+                                 .arg(localTime->tm_sec, 2, 10, QChar('0'));
 
     //qDebug() << formatted_date_time;
-    setCalender(formatted_date_time);
+    setCalender(formatted_date);
+    setClock(formatted_time);
 }
 
 QString DateTime::calender() const
@@ -68,4 +71,17 @@ void DateTime::setCalender(const QString &newCalender)
         return;
     m_calender = newCalender;
     emit calenderChanged();
+}
+
+QString DateTime::clock() const
+{
+    return m_clock;
+}
+
+void DateTime::setClock(const QString &newClock)
+{
+    if (m_clock == newClock)
+        return;
+    m_clock = newClock;
+    emit clockChanged();
 }

@@ -15,14 +15,13 @@ Window {
     width: 680
     visibility: Window.FullScreen
 
-    property color main_toolbar_base_color: "white"
+    property color top_toolbar_base_color: "white"
     property int image_text_dist: 10
     property int icon_size: 80
-    property bool buton_highlighted : true
 
     Rectangle {
-        id: main_toolbar
-        color: main_toolbar_base_color
+        id: top_toolbar
+        color: top_toolbar_base_color
         height: Math.max(parent.width * 0.03, parent.height * 0.03)
         width: parent.width
 
@@ -31,185 +30,24 @@ Window {
             left: parent.left
         }
 
-        Rectangle{
-            id: exit_rectangle
-            height: parent.height * 0.75
-            width: height
-            radius: height / 2
-
-            color: "red"
-            anchors {
-                right: parent.right
-                rightMargin: parent.height * 0.125
-                verticalCenter: parent.verticalCenter
-            }
-
-            Text {
-                text: "X"
-                font.pixelSize: Math.max(parent.width * 0.75, parent.height * 0.75)
-                color: "white"
-                anchors.centerIn: parent
-                font.bold: true
-            }
-
-            MouseArea {
-                id: exit
-                anchors.fill: parent
-                hoverEnabled: true
-                onClicked:  Qt.quit()
-            }
-
-        }
-
-        Text {
-            id: date_time_text
-            text: DateTime.calender
-            font.bold: true
-            font.pointSize: Math.max(parent.width * 0.0075, 1)
-            color: "#4B0082"
-            anchors {
-                left: parent.left
-                leftMargin: parent.width * 0.005
-                verticalCenter: parent.verticalCenter
-            }
+        TopToolbar{
+            anchors.fill: parent
         }
     }
 
     Rectangle {
-        id: side_panel
+        id: navigation_panel
         width: parent.width / 10
-        height: parent.height - main_toolbar.height
+        height: parent.height - top_toolbar.height
         color: "lightgray"
 
         anchors {
-            top: main_toolbar.bottom
+            top: top_toolbar.bottom
             right: parent.right
         }
 
-        ColumnLayout {
+        NavigationMenu{
             anchors.fill: parent
-            spacing: 1
-
-            Button {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                icon.source: "../assets/icons/home.png"
-                icon.width: icon_size
-                icon.height: icon_size
-                highlighted: buton_highlighted
-                Text {
-                    text: "Home"
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: image_text_dist
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    color: "white"
-                    font.bold: true
-                }
-            }
-            Button {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                icon.source: "../assets/icons/warning.png"
-                icon.width: icon_size
-                icon.height: icon_size
-                highlighted: buton_highlighted
-                Text {
-                    text: "Alarms"
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: image_text_dist
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    color: "white"
-                    font.bold: true
-                }
-            }
-            Button {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                icon.source: "../assets/icons/settings.png"
-                icon.width: icon_size
-                icon.height: icon_size
-                highlighted: buton_highlighted
-                Text {
-                    text: "Settings"
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: image_text_dist
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    color: "white"
-                    font.bold: true
-                }
-            }
-            Button {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                icon.source: "../assets/icons/service.png"
-                icon.width: icon_size
-                icon.height: icon_size
-                highlighted: buton_highlighted
-                Text {
-                    text: "Service"
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: image_text_dist
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    color: "white"
-                    font.bold: true
-                }
-            }
-            Button {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                icon.source: "../assets/icons/reset.png"
-                icon.width: icon_size
-                icon.height: icon_size
-                highlighted: buton_highlighted
-                Text {
-                    text: "Reset"
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: image_text_dist
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    color: "white"
-                    font.bold: true
-                }
-            }
-            Button {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                icon.source: "../assets/icons/play.png"
-                icon.width: icon_size
-                icon.height: icon_size
-                highlighted: buton_highlighted
-                Text {
-                    id: start_stop_text
-                    text: "Start"
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: image_text_dist
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    color: "white"
-                    font.bold: true
-                }
-                onClicked: {
-                    icon.source = icon.source == "../assets/icons/play.png" ? "../assets/icons/pause.png" : "../assets/icons/play.png";
-                    start_stop_text.text = icon.source == "../assets/icons/play.png" ? "Start" : "Stop";
-                }
-            }
-            Button {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                icon.source: "../assets/icons/test.png"
-                icon.width: icon_size
-                icon.height: icon_size
-                highlighted: buton_highlighted
-                Text {
-                    id: test_button_text
-                    text: "Test Mode"
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: image_text_dist
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    color: "white"
-                    font.bold: true
-                }
-
-                onClicked: SerialComm.writeBytes()
-            }
         }
     }
 }
