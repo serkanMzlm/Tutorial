@@ -4,7 +4,7 @@ SerialComm::SerialComm(QObject *parent)
     : QObject{parent}
 {
     port_ = new QSerialPort(this);
-//    debugPort();
+    checkDeviceConnection();
 }
 
 SerialComm::~SerialComm()
@@ -16,12 +16,13 @@ void SerialComm::checkDeviceConnection()
 {
     for(const QSerialPortInfo port_list : QSerialPortInfo::availablePorts()){
         bool is_found = ((port_list.manufacturer() == "FTDI") ||
-                         (port_list.description() == "Arduino Mega 2560"));
+                         (port_list.description() == "0042"));
         if(is_found){
             port_->setPortName(port_list.portName());
             port_->setBaudRate(BAUDRATE);
             port_->setDataBits(QSerialPort::Data8);
             while(port_->open(QIODevice::ReadWrite)){ }
+            qDebug() << "Port created successfully";
             QThread::sleep(1);
         }
     }
@@ -35,10 +36,17 @@ void SerialComm::writeBytes(uint8_t new_data)
 {
     if ( !(port_->isOpen()))
     {
+        qDebug() << "Port Closed";
         return ;
     }
-    port_->write((char*)(new_data), 1);
-    port_->flush();
+
+    char dataToSend[1] = { static_cast<char>(new_data) };
+    qint64 bytesWritten = port_->write(dataToSend, 1);
+    if (bytesWritten == -1) {
+        qDebug() << "Could not write data to port: " << port_->errorString();
+    } else {
+        port_->flush();
+    }
 }
 
 void SerialComm::debugPort(){
