@@ -4,7 +4,7 @@ SerialComm::SerialComm(QObject *parent)
     : QObject{parent}
 {
     port_ = new QSerialPort(this);
-    debugPort();
+//    debugPort();
 }
 
 SerialComm::~SerialComm()
@@ -43,7 +43,9 @@ void SerialComm::writeBytes(uint8_t new_data)
 
 void SerialComm::debugPort(){
     for(const QSerialPortInfo port_list : QSerialPortInfo::availablePorts()){
-        if(port_list.description() == "") continue;
+        if(port_list.description() == "") {
+            continue;
+        }
         qDebug() << "-----------------------------------------------------";
         qDebug() << "portName:          " << port_list.portName();
         qDebug() << "systemLocation:    " << port_list.systemLocation();
