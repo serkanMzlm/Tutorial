@@ -3,6 +3,9 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
+import conveyor.datetime 1.0
+import conveyor.serialcom 1.0
+
 Window {
     id: root
     width: 640
@@ -15,6 +18,8 @@ Window {
     property color top_toolbar_base_color: "white"
     property int image_text_dist: 10
     property int icon_size: width / 25
+    property string selectedLabel: "Home"
+
     Rectangle {
         id: top_toolbar
         color: top_toolbar_base_color

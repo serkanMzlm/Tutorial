@@ -4,12 +4,16 @@ project(conveyor_2 VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Quick)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Quick Core SerialPort)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(appconveyor_2
     main.cpp
+    date_time.h date_time.cpp
+    section_navigation_menu.h section_navigation_menu.cpp
+    serial_comm.h serial_comm.cpp
+
 )
 
 qt_add_qml_module(appconveyor_2
@@ -28,7 +32,7 @@ qt_add_qml_module(appconveyor_2
         assets/icons/reset.png
         assets/icons/pause.png
         assets/icons/test.png
-        assets/icons/conveyor.ico 
+        assets/icons/conveyor.ico
 )
 
 set_target_properties(appconveyor_2 PROPERTIES
@@ -41,6 +45,8 @@ set_target_properties(appconveyor_2 PROPERTIES
 
 target_link_libraries(appconveyor_2
     PRIVATE Qt6::Quick
+    Qt${QT_VERSION_MAJOR}::Core
+    Qt${QT_VERSION_MAJOR}::SerialPort
 )
 
 include(GNUInstallDirs)
