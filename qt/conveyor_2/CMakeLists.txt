@@ -23,6 +23,7 @@ qt_add_qml_module(appconveyor_2
         qml/Main.qml
         qml/NavigationMenu.qml
         qml/TopToolbar.qml
+        qml/TestModeMenu.qml
     RESOURCES
         assets/icons/home.png
         assets/icons/service.png

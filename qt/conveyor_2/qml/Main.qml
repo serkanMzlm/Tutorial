@@ -12,7 +12,7 @@ Window {
     height: 480
     visible: true
     title: qsTr("Conveyor")
-    // visibility: Window.FullScreen
+    visibility: Window.FullScreen
     color: "gray"
 
     property color top_toolbar_base_color: "white"
@@ -48,6 +48,22 @@ Window {
         }
 
         NavigationMenu{
+            anchors.fill: parent
+        }
+    }
+
+    Rectangle {
+        id: menu_panel
+        color: "gray"
+        width: parent.width - navigation_panel.width
+        height: navigation_panel.height
+        anchors {
+            top: top_toolbar.bottom
+            right: navigation_panel.left
+            left: parent.left
+        }
+        visible: selectedLabel == "Test"
+        TestModeMenu{
             anchors.fill: parent
         }
     }

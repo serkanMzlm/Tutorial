@@ -16,7 +16,8 @@ void SerialComm::checkDeviceConnection()
 {
     for(const QSerialPortInfo port_list : QSerialPortInfo::availablePorts()){
         bool is_found = ((port_list.manufacturer() == "FTDI") ||
-                         (port_list.description() == "STLINK-V3"));
+                         (port_list.description() == "STLINK-V3") ||
+                         (port_list.description() == "USB-SERIAL CH340"));
         if(is_found){
             port_->setPortName(port_list.portName());
             port_->setBaudRate(BAUDRATE);
