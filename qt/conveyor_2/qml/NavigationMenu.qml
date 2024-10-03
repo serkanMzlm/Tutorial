@@ -2,6 +2,10 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+
+import conveyor.datetime 1.0
+import conveyor.serialcom 1.0
+
 Item {
     id: root
     property color navigation_block_color: "#444A4A"
@@ -15,8 +19,8 @@ Item {
         { "label": "Test", "iconSource": "../assets/icons/test.png" }
     ]
 
-    property int selectedIndex: 0
     property bool isPlaying: false
+    property int selectedIndex: 0
 
     ColumnLayout {
         anchors.fill: parent
@@ -63,8 +67,10 @@ Item {
                         }else if(modelData.label == "Start" && isPlaying){
                             icon_image.source =  modelData.iconSource;
                             isPlaying = false;
-                            icon_text.text= modelData.label
+                            icon_text.text = modelData.label
                         }
+
+                        selectedLabel =  modelData.label
                     }
                 }
             }

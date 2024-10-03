@@ -3,6 +3,9 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
+import conveyor.datetime 1.0
+import conveyor.serialcom 1.0
+
 Item {
     id: root
     Rectangle{
@@ -35,27 +38,40 @@ Item {
 
     }
 
-    // Text {
-    //     id: date_text
-    //     text: DateTime.calender
-    //     font.bold: true
-    //     font.pointSize: Math.max(parent.width * 0.01, 1)
-    //     color: "#4B0082"
-    //     anchors {
-    //         left: parent.left
-    //         leftMargin: parent.width * 0.01
-    //         verticalCenter: parent.verticalCenter
-    //     }
-    // }
+    Text {
+        id: date_text
+        text: DateTime.calender
+        // font.bold: true
+        font.pointSize: Math.max(parent.width * 0.01, 1)
+        color: "black"
+        anchors {
+            left: parent.left
+            leftMargin: parent.width * 0.01
+            verticalCenter: parent.verticalCenter
+        }
+    }
 
-    // Text {
-    //     id: clock_text
-    //     text: DateTime.clock
-    //     font.bold: true
-    //     font.pointSize: Math.max(parent.width * 0.01, 1)
-    //     color: "#4B0082"
-    //     anchors {
-    //         centerIn: parent
-    //     }
-    // }
+    Text {
+        id: clock_text
+        text: DateTime.clock
+        // font.bold: true
+        font.pointSize: Math.max(parent.width * 0.01, 1)
+        color: "black"
+        anchors {
+            left: date_text.right
+            top: date_text.top
+            leftMargin: 20
+        }
+    }
+
+    Text {
+        id: select_navigation_menu_text
+        text: selectedLabel
+        font.bold: true
+        font.pointSize: Math.max(parent.width * 0.015, 1)
+        color: "#4B0082"
+        anchors {
+            centerIn: parent
+        }
+    }
 }
