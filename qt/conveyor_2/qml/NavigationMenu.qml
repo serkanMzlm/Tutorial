@@ -69,7 +69,6 @@ Item {
                             isPlaying = false;
                             icon_text.text = modelData.label
                         }
-
                         selectedLabel =  modelData.label
                     }
                 }
