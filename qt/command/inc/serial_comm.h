@@ -21,6 +21,7 @@ class SerialComm : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString info READ info WRITE setInfo NOTIFY infoChanged FINAL)
+    Q_PROPERTY(QString serial_raw READ serial_raw WRITE setSerial_raw NOTIFY serial_rawChanged FINAL)
     Q_PROPERTY(bool isready READ isready WRITE setIsready NOTIFY isreadyChanged FINAL)
     Q_PROPERTY(bool isactive READ isactive WRITE setIsactive NOTIFY isactiveChanged FINAL)
 public:
@@ -37,14 +38,17 @@ public:
     void init();
 
     QString info() const;
+    QString serial_raw() const;
     bool isready() const;
     bool isactive() const;
     void setInfo(const QString &newInfo);
     void setIsready(bool newIsready);
     void setIsactive(bool newIsactive);
+    void setSerial_raw(const QString &newSerial_raw);
 
 private:
     QString m_info;
+    QString m_serial_raw;
     QSerialPort *port;
     QTimer* connection_timer;
 
@@ -60,6 +64,7 @@ signals:
     void infoChanged();
     void isreadyChanged();
     void isactiveChanged();
+    void serial_rawChanged();
 };
 
 #endif // SERIAL_COMM_H

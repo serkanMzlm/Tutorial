@@ -9,7 +9,7 @@ ApplicationWindow {
     id: main_window
     width: 640
     height: 480
-    visibility: Window.FullScreen
+    // visibility: Window.FullScreen
     visible: true
 
     title: qsTr("Command")
