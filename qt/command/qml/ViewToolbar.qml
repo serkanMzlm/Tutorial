@@ -61,7 +61,7 @@ Rectangle {
     Text {
         id: date_text
         text: SysInfo.calender
-        font.pointSize: Math.max(parent.width * 0.01, 1)
+        font.pointSize: font_size * 1.5
         color: "black"
         anchors {
             left: logo_rec.right
@@ -73,7 +73,7 @@ Rectangle {
     Text {
         id: clock_text
         text: SysInfo.clock
-        font.pointSize: Math.max(parent.width * 0.01, 1)
+        font.pointSize: font_size * 1.5
         color: "black"
         anchors {
             left: date_text.right

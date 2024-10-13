@@ -20,6 +20,7 @@ SerialComm::~SerialComm()
 void SerialComm::init()
 {
     m_isready = false;
+    m_isactive = false;
     port = new QSerialPort(this);
     connection_timer = new QTimer(this);
     connection_timer->setInterval(1200);
@@ -83,12 +84,17 @@ void SerialComm::readBytes()
     while(port->bytesAvailable()){
         uint8_t cur_byte;
         port->read((char*)&cur_byte, 1);
-        if(cur_byte == 46)
+        qDebug() << cur_byte;
+        if(cur_byte == 'a')
         {
-            setIsready(true);
+            setIsactive(true);
+            setInfo("System Standby");
+        }else if(cur_byte == 'k' && isactive())
+        {
             setInfo("Click a Number");
+            setIsready(true);
         }
-        if(!isready())
+        if(!isready() && !isactive())
         {
             setInfo("Waiting For Response From Device");
         }
@@ -103,7 +109,12 @@ void SerialComm::writeBytes(uint8_t new_data)
         return ;
     }
 
-    if(!isready())
+    if(!isactive())
+    {
+        return;
+    }
+
+    if(!isready() && new_data != 'p')
     {
         return;
     }
@@ -126,13 +137,6 @@ void SerialComm::setInfo(const QString &newInfo)
     emit infoChanged();
 }
 
-QString SerialComm::info() const { return m_info; }
-
-bool SerialComm::isready() const
-{
-    return m_isready;
-}
-
 void SerialComm::setIsready(bool newIsready)
 {
     if (m_isready == newIsready)
@@ -140,3 +144,15 @@ void SerialComm::setIsready(bool newIsready)
     m_isready = newIsready;
     emit isreadyChanged();
 }
+
+void SerialComm::setIsactive(bool newIsactive)
+{
+    if (m_isactive == newIsactive)
+        return;
+    m_isactive = newIsactive;
+    emit isactiveChanged();
+}
+
+QString SerialComm::info() const { return m_info; }
+bool SerialComm::isready() const { return m_isready; }
+bool SerialComm::isactive() const { return m_isactive; }

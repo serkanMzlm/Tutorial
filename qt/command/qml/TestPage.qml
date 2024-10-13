@@ -16,13 +16,15 @@ Rectangle {
     }
 
     property bool is_playing_test: true
+    property bool is_ready: SerialComm.isready
+    property bool is_active: SerialComm.isactive
 
     Rectangle {
         id: start_button
         width: main_window.width / 10
         height: width / 2
         radius: height / 4
-        color: SerialComm.isready ? "darkgreen" : "#383838"
+        color: is_active ? "darkgreen" : "#383838"
         anchors {
             horizontalCenter: parent.horizontalCenter
             top: parent.top
@@ -38,13 +40,14 @@ Rectangle {
 
             color: "white"
             font.bold: true
+            font.pointSize: font_size * 1.5
         }
 
         MouseArea {
             id: mouse_area
             anchors.fill: parent
             onClicked: {
-                if(SerialComm.isready)
+                if(is_active)
                 {
                     if(is_playing_test) {
                         is_playing_test = false
@@ -55,53 +58,53 @@ Rectangle {
                     else {
                         is_playing_test = true
                         icon_text.text = "Start"
-                        SerialComm.writeBytes(21)
+                        SerialComm.writeBytes(100)
                         start_button.color = "darkgreen"
                     }
                 }
             }
             onPressed: {
-                if(SerialComm.isready) {
+                if(is_active) {
                     start_button.scale = 0.95
                 }
             }
-            onReleased:        {
-                if(SerialComm.isready) {
+            onReleased: {
+                if(is_active) {
                     start_button.scale = 1
                 }
             }
         }
+    }
+
+    Text {
+        id: serial_info_text
+        text: SerialComm.info
+        font.pointSize: font_size * 2
+        color: "darkgreen"
+        anchors {
+            top: start_button.bottom
+            topMargin: parent.height * 0.02
+            horizontalCenter: start_button.horizontalCenter
         }
+    }
 
-            Text {
-                id: serial_info_text
-                text: SerialComm.info
-                font.pointSize: font_size * 2
-                color: "darkgreen"
-                anchors {
-                    top: start_button.bottom
-                    topMargin: parent.height * 0.02
-                    horizontalCenter: start_button.horizontalCenter
-                }
-            }
+    Grid {
+        anchors.centerIn: parent
+        visible: is_ready
+        rows: 3
+        columns: 4
+        spacing: parent.width / 14
 
-            Grid {
-                anchors.centerIn: parent
-
-                rows: 3
-                columns: 4
-                spacing: parent.width / 14
-
-                Repeater {
-                    model: 12
-                    Button {
-                        text: "Button " + (index + 1)
-                        width: main_window.width / 10
-                        height: width / 2
-                        onClicked: {
-                            SerialComm.writeBytes(index + 1)
-                        }
-                    }
+        Repeater {
+            model: 12
+            Button {
+                text: "Button " + (index + 1)
+                width: main_window.width / 10
+                height: width / 2
+                onClicked: {
+                    SerialComm.writeBytes(index + 1)
                 }
             }
         }
+    }
+}
