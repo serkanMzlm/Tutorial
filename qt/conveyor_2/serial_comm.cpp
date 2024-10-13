@@ -38,7 +38,8 @@ void SerialComm::readBytes()
     while(port_->bytesAvailable()){
         uint8_t cur_byte;
         port_->read((char*)&cur_byte, 1);
-        if(cur_byte == 46)
+        qDebug() << cur_byte;
+        if(cur_byte == 70)
         {
             setInfo("Enter a Number");
             start_test = true;
