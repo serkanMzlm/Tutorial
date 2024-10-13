@@ -88,6 +88,10 @@ void SerialComm::readBytes()
             setIsready(true);
             setInfo("Click a Number");
         }
+        if(!isready())
+        {
+            setInfo("Waiting For Response From Device");
+        }
     }
 }
 
@@ -99,7 +103,7 @@ void SerialComm::writeBytes(uint8_t new_data)
         return ;
     }
 
-    if(!isready() && new_data !=  0x11)
+    if(!isready())
     {
         return;
     }
