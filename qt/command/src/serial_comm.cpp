@@ -85,6 +85,10 @@ void SerialComm::readBytes()
         uint8_t cur_byte;
         port->read((char*)&cur_byte, 1);
         qDebug() << cur_byte;
+        // int new_data_int = static_cast<int>(cur_byte);
+        QString new_data_ = QString::number(cur_byte);
+        setSerial_raw(new_data_);
+
         if(cur_byte == 'a')
         {
             setIsactive(true);
@@ -156,3 +160,14 @@ void SerialComm::setIsactive(bool newIsactive)
 QString SerialComm::info() const { return m_info; }
 bool SerialComm::isready() const { return m_isready; }
 bool SerialComm::isactive() const { return m_isactive; }
+
+QString SerialComm::serial_raw() const
+{
+    return m_serial_raw;
+}
+
+void SerialComm::setSerial_raw(const QString &newSerial_raw)
+{
+    m_serial_raw = newSerial_raw;
+    emit serial_rawChanged();
+}

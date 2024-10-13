@@ -20,9 +20,33 @@ Rectangle {
     property bool is_active: SerialComm.isactive
 
     Rectangle {
+        id: consol_display
+        height: parent.height * 0.95
+        width: parent.width * 0.1
+        anchors.verticalCenter: parent.verticalCenter
+        ScrollView {
+            anchors.fill: parent
+            TextArea {
+                id: serialDisplay
+                text: ""
+                font.pointSize: font_size
+                wrapMode: TextEdit.Wrap
+                readOnly: true  // Bu satırı ekleyebilirsiniz, eğer kullanıcı metni düzenleyememeli ise.
+            }
+        }
+        Connections {
+            target: SerialComm
+            function onSerial_rawChanged() {
+                serialDisplay.append(SerialComm.serial_raw)
+            }
+        }
+    }
+
+
+    Rectangle {
         id: start_button
-        width: main_window.width / 10
-        height: width / 2
+        width: main_window.width / 12
+        height: width / 2.2
         radius: height / 4
         color: is_active ? "darkgreen" : "#383838"
         anchors {
@@ -93,7 +117,7 @@ Rectangle {
         visible: is_ready
         rows: 3
         columns: 4
-        spacing: parent.width / 14
+        spacing: parent.width / 20
 
         Repeater {
             model: 12
