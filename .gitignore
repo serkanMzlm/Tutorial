@@ -90,3 +90,5 @@ SWV_export
 .settings
 Debug
 Startup
+.metadata
+*.ld
