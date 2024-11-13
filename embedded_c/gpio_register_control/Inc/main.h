@@ -20,6 +20,7 @@
 #define PORTD_REG (0x40020C00)
 #define PORTE_REG (0x40021000)
 #define PORTH_REG (0x40021C00)
+#define PORT_OFFSET (0x400)
 
 #define PORT_INPUT_OFFSET (0x10)
 #define PORT_OUTPUT_OFFSET (0x14)
@@ -28,5 +29,30 @@
 #define ORANGE_LD
 #define RED_LD
 #define BLUE_LD
+
+typedef enum {
+	A,
+	B,
+	C,
+	D,
+	E,
+	H
+} Port;
+
+typedef enum {
+	INPUT,
+	OUTPUT
+} PinMode;
+
+typedef enum {
+	LOW,
+	HIGH
+} PinState;
+
+void init(Port port);
+void pinMode(Port port, uint8_t pin_num, PinMode mode);
+uint8_t readPin(Port port, uint8_t pin_num);
+void writePin(Port port, uint8_t pin_num, PinState state);
+void delay();
 
 #endif /* MAIN_H_ */

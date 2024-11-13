@@ -24,65 +24,80 @@
 #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-void pinMode();
-void readPin();
-void writePin();
-
 int main(void) {
-	uint32_t volatile *clk_ctrl_reg_ptr = (uint32_t*) RCC_AHB1ENR_REG;
-	uint32_t volatile *port_d_mode_reg_ptr = (uint32_t*) PORTD_REG;
-	uint32_t volatile *port_d_mode_out_reg_ptr = (uint32_t*) (PORTD_REG
-			+ PORT_OUTPUT_OFFSET);
-	uint32_t volatile *port_a_mode_reg_ptr = (uint32_t*) (PORTA_REG);
-	uint32_t volatile *port_a_mode_in_reg_ptr = (uint32_t*) (PORTA_REG
-			+ PORT_INPUT_OFFSET);
-	// GPIO Output
-	// 1. Enable the clock GPIOD peripheral in the AHB1ENR
-	*clk_ctrl_reg_ptr |= (1 << 3);  // 0x08
-	// 2. configure the mode of the IO pin as output
-	*port_d_mode_reg_ptr &= ~(3 << 26); // 0xF3FFFFFF (a. clear the 26th and 27th bit positions (clear))
-	*port_d_mode_reg_ptr |= (1 << 26); // 0x04000000 (b. make 26th bit position as 1 (set))
-	// 3. set 13th bit of the output data register to make I/O pin-12 as HIGH
-	*port_d_mode_out_reg_ptr |= (1 << 13); // 0x2000 (ON) and &= ~(1 << 13) (OFF)
+	init(A);
+	init(D);
 
-	// GPIO Input
-	// 1. Enable the clock GPIOA peripheral in the AHB1ENR
-	*clk_ctrl_reg_ptr |= (1 << 0);  // 0x00
-	// 2. configure the mode of the IO pin as output
-	*port_a_mode_reg_ptr &= ~(3 << 0);   // clear and set
+	pinMode(D, 13, OUTPUT);
+	pinMode(A, 0, INPUT);
 
 	uint8_t led_status = 0;      // LED initially OFF
 	uint8_t prev_button_state = 0;  // Previous button state
 	for (;;) {
-		uint8_t button_state = (uint8_t) (*port_a_mode_in_reg_ptr & 0x1);
+		uint8_t button_state = readPin(A, 0);
 
 		if (button_state && !prev_button_state) {
 			led_status = !led_status;
 
 			if (led_status) {
-				*port_d_mode_out_reg_ptr |= (1 << 13);
+				writePin(D, 13, HIGH);
 			} else {
-				*port_d_mode_out_reg_ptr &= ~(1 << 13);
+				writePin(D, 13, LOW);
 			}
 		}
-
 		prev_button_state = button_state;
-
-		for (volatile int i = 0; i < 100000; i++);
+		delay();
 	}
 }
 
-void pinMode()
+void init(Port port)
 {
+	uint32_t volatile *clk_ctrl_reg_ptr = (uint32_t*) RCC_AHB1ENR_REG;
+	uint32_t volatile *port_a_mode_in_reg_ptr = (uint32_t*) (PORTA_REG + PORT_INPUT_OFFSET);
 
+	*clk_ctrl_reg_ptr |= (1 << port); // Enable the clock GPIOD peripheral in the AHB1ENR
 }
 
-void readPin()
+void pinMode(Port port, uint8_t pin_num, PinMode mode)
 {
+	int volatile pin_index = pin_num * 2;
 
+	// The reason for using volatile is to prevent the compiler from interpreting the variable.
+	uint32_t volatile port_addres = PORTA_REG + (int)port * PORT_OFFSET;
+	uint32_t volatile *port_mode_reg_ptr = (uint32_t*)(port_addres);
+
+	// Clear the x and (x + 1) bit positions
+	*port_mode_reg_ptr &= ~(3 << pin_index);
+	switch (mode){
+		case OUTPUT:
+			*port_mode_reg_ptr |= (1 << pin_index); // make x bit position as 1
+			break;
+		case INPUT:
+			break;
+		default:
+			break;
+	}
 }
 
-void writePin()
+uint8_t readPin(Port port, uint8_t pin_num)
 {
+	uint32_t volatile port_addres = PORTA_REG + (int)port * PORT_OFFSET;
+	uint32_t volatile *port_mode_in_reg_ptr = (uint32_t*)(port_addres + PORT_INPUT_OFFSET);
+	return ((uint8_t) (*port_mode_in_reg_ptr & 0x1));
+}
 
+void writePin(Port port, uint8_t pin_num, PinState state)
+{
+	uint32_t volatile port_addres = PORTA_REG + (int)port * PORT_OFFSET;
+	uint32_t volatile *port_mode_out_reg_ptr = (uint32_t*)(port_addres + PORT_OUTPUT_OFFSET);
+	if(state == HIGH) {
+		*port_mode_out_reg_ptr |= (1 << 13);
+	} else {
+		*port_mode_out_reg_ptr &= ~(1 << 13);
+	}
+}
+
+void delay()
+{
+	for (volatile int i = 0; i < 100000; i++);
 }
