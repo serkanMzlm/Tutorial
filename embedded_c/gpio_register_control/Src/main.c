@@ -24,6 +24,12 @@
 #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
+/*
+ * Debug yapmak için syscalls.c dosyasına ITM_SendChar fonksiyonu oluşturulur
+ * _write fonksiyonu içine ITM_SendChar fonksiyonu konulur. serial ekranda
+ * görüntülemek için "SWV ITM Data Console" açılır.
+ */
+
 int main(void) {
 	init(A);
 	init(D);
@@ -31,18 +37,18 @@ int main(void) {
 	pinMode(D, 13, OUTPUT);
 	pinMode(A, 0, INPUT);
 
-	uint8_t led_status = 0;      // LED initially OFF
+	uint8_t led_status = 0;         // LED initially OFF
 	uint8_t prev_button_state = 0;  // Previous button state
 	for (;;) {
 		uint8_t button_state = readPin(A, 0);
-
 		if (button_state && !prev_button_state) {
 			led_status = !led_status;
-
 			if (led_status) {
 				writePin(D, 13, HIGH);
+				printf("HIGH\n");
 			} else {
 				writePin(D, 13, LOW);
+				printf("LOW\n");
 			}
 		}
 		prev_button_state = button_state;
@@ -53,8 +59,6 @@ int main(void) {
 void init(Port port)
 {
 	uint32_t volatile *clk_ctrl_reg_ptr = (uint32_t*) RCC_AHB1ENR_REG;
-	uint32_t volatile *port_a_mode_in_reg_ptr = (uint32_t*) (PORTA_REG + PORT_INPUT_OFFSET);
-
 	*clk_ctrl_reg_ptr |= (1 << port); // Enable the clock GPIOD peripheral in the AHB1ENR
 }
 
