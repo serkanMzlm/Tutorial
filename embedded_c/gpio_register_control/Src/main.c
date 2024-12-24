@@ -27,7 +27,8 @@
 /*
  * Debug yapmak için syscalls.c dosyasına ITM_SendChar fonksiyonu oluşturulur
  * _write fonksiyonu içine ITM_SendChar fonksiyonu konulur. serial ekranda
- * görüntülemek için "SWV ITM Data Console" açılır.
+ * görüntülemek için "SWV ITM Data Console" açılır. Configure Trace kısmında
+ * port seçilir ve Start Trace kısmına açılır.
  */
 
 int main(void) {
