@@ -4,6 +4,9 @@ set (files
   fungus_diffusespecular.png
   flat_normal.png
   water.jpg
+  ground.png
+  green.png
+  white.png
 )
 
 
