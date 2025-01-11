@@ -1,6 +1,6 @@
 #include <gst/gst.h>
 
-/* Functions below print the Capabilities in a human-friendly format */
+
 static gboolean print_field (GQuark field, const GValue * value, gpointer pfx) {
   gchar *str = gst_value_serialize (value);
 
@@ -31,7 +31,6 @@ static void print_caps (const GstCaps * caps, const gchar * pfx) {
   }
 }
 
-/* Prints information about a Pad Template, including its Capabilities */
 static void print_pad_templates_information (GstElementFactory * factory) {
   const GList *pads;
   GstStaticPadTemplate *padtemplate;
@@ -76,7 +75,6 @@ static void print_pad_templates_information (GstElementFactory * factory) {
   }
 }
 
-/* Shows the CURRENT capabilities of the requested pad in the given element */
 static void print_pad_capabilities (GstElement *element, gchar *pad_name) {
   GstPad *pad = NULL;
   GstCaps *caps = NULL;
@@ -88,12 +86,10 @@ static void print_pad_capabilities (GstElement *element, gchar *pad_name) {
     return;
   }
 
-  /* Retrieve negotiated caps (or acceptable caps if negotiation is not finished yet) */
   caps = gst_pad_get_current_caps (pad);
   if (!caps)
     caps = gst_pad_query_caps (pad, NULL);
 
-  /* Print and free */
   g_print ("Caps for the %s pad:\n", pad_name);
   print_caps (caps, "      ");
   gst_caps_unref (caps);
@@ -108,10 +104,8 @@ int main(int argc, char *argv[]) {
   GstStateChangeReturn ret;
   gboolean terminate = FALSE;
 
-  /* Initialize GStreamer */
   gst_init (&argc, &argv);
 
-  /* Create the element factories */
   source_factory = gst_element_factory_find ("audiotestsrc");
   sink_factory = gst_element_factory_find ("autoaudiosink");
   if (!source_factory || !sink_factory) {
@@ -119,15 +113,13 @@ int main(int argc, char *argv[]) {
     return -1;
   }
 
-  /* Print information about the pad templates of these factories */
+  // Elementin pad (bağlantı noktası) şablonlarını ve bu şablonların yönlerini, uygunluklarını ve veri kapasitelerini yazdırır
   print_pad_templates_information (source_factory);
   print_pad_templates_information (sink_factory);
 
-  /* Ask the factories to instantiate actual elements */
   source = gst_element_factory_create (source_factory, "source");
   sink = gst_element_factory_create (sink_factory, "sink");
 
-  /* Create the empty pipeline */
   pipeline = gst_pipeline_new ("test-pipeline");
 
   if (!pipeline || !source || !sink) {
@@ -135,7 +127,6 @@ int main(int argc, char *argv[]) {
     return -1;
   }
 
-  /* Build the pipeline */
   gst_bin_add_many (GST_BIN (pipeline), source, sink, NULL);
   if (gst_element_link (source, sink) != TRUE) {
     g_printerr ("Elements could not be linked.\n");
@@ -143,23 +134,21 @@ int main(int argc, char *argv[]) {
     return -1;
   }
 
-  /* Print initial negotiated caps (in NULL state) */
   g_print ("In NULL state:\n");
+  
+  //  Elementin pad'inin (örneğin, sink pad) mevcut kapasitelerini yazdırır. Bu, elementin hangi tür verileri kabul edebileceğini gösterir.
   print_pad_capabilities (sink, "sink");
 
-  /* Start playing */
   ret = gst_element_set_state (pipeline, GST_STATE_PLAYING);
   if (ret == GST_STATE_CHANGE_FAILURE) {
     g_printerr ("Unable to set the pipeline to the playing state (check the bus for error messages).\n");
   }
 
-  /* Wait until error, EOS or State Change */
   bus = gst_element_get_bus (pipeline);
   do {
     msg = gst_bus_timed_pop_filtered (bus, GST_CLOCK_TIME_NONE, GST_MESSAGE_ERROR | GST_MESSAGE_EOS |
         GST_MESSAGE_STATE_CHANGED);
 
-    /* Parse message */
     if (msg != NULL) {
       GError *err;
       gchar *debug_info;
@@ -178,18 +167,15 @@ int main(int argc, char *argv[]) {
           terminate = TRUE;
           break;
         case GST_MESSAGE_STATE_CHANGED:
-          /* We are only interested in state-changed messages from the pipeline */
           if (GST_MESSAGE_SRC (msg) == GST_OBJECT (pipeline)) {
             GstState old_state, new_state, pending_state;
             gst_message_parse_state_changed (msg, &old_state, &new_state, &pending_state);
             g_print ("\nPipeline state changed from %s to %s:\n",
                 gst_element_state_get_name (old_state), gst_element_state_get_name (new_state));
-            /* Print the current capabilities of the sink element */
             print_pad_capabilities (sink, "sink");
           }
           break;
         default:
-          /* We should not reach here because we only asked for ERRORs, EOS and STATE_CHANGED */
           g_printerr ("Unexpected message received.\n");
           break;
       }
@@ -197,7 +183,6 @@ int main(int argc, char *argv[]) {
     }
   } while (!terminate);
 
-  /* Free resources */
   gst_object_unref (bus);
   gst_element_set_state (pipeline, GST_STATE_NULL);
   gst_object_unref (pipeline);
