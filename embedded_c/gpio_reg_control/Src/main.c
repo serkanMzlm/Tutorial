@@ -61,10 +61,7 @@ int main(void)
 			}
 			printf("Counter: %d, Prev Counter: %d\n", counter, prev_counter);
 		}
-//		writePin(D, GREEN_LED, HIGH);
-//		writePin(D, BLUE_LED, HIGH);
-//		writePin(D, ORANGE_LED, HIGH);
-//		writePin(D, RED_LED, HIGH);
+
 		writePin(D, (12 + prev_counter), LOW);
 		writePin(D, (12 + counter), HIGH);
 		delay_ms(10);
