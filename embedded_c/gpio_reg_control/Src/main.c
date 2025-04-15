@@ -67,6 +67,8 @@ int main(void)
 		delay_ms(10);
 		prev_button_state = button_state;
 	}
+
+ de
 }
 
 void delay_ms(unsigned int ms)
